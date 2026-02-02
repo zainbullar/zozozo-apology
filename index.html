@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>for zobia, my lovely wife</title>
 
-<!-- fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
 
 <style>
@@ -19,30 +18,32 @@
     overflow: hidden;
   }
 
-  /* floating stickers */
+  /* stickers */
   .sticker {
     position: absolute;
     font-size: 26px;
-    opacity: 0.5;
-    animation: float 6s infinite ease-in-out;
+    opacity: 0.55;
+    animation: float 7s infinite ease-in-out;
   }
 
-  .sticker:nth-child(1) { left: 6%; top: 18%; }
-  .sticker:nth-child(2) { right: 8%; top: 35%; animation-delay: 2s; }
-  .sticker:nth-child(3) { left: 10%; bottom: 22%; animation-delay: 4s; }
-  .sticker:nth-child(4) { right: 12%; bottom: 15%; animation-delay: 1s; }
+  .s1 { left: 5%; top: 15%; }
+  .s2 { right: 6%; top: 25%; animation-delay: 1s; }
+  .s3 { left: 8%; bottom: 20%; animation-delay: 2s; }
+  .s4 { right: 10%; bottom: 15%; animation-delay: 3s; }
+  .s5 { left: 15%; top: 45%; animation-delay: 4s; }
+  .s6 { right: 15%; bottom: 40%; animation-delay: 5s; }
 
   @keyframes float {
-    0%, 100% { transform: translateY(0); }
+    0%,100% { transform: translateY(0); }
     50% { transform: translateY(-18px); }
   }
 
-  /* main card */
+  /* card */
   .card {
     background: #ffffffdd;
     backdrop-filter: blur(8px);
-    padding: 40px 45px;
-    border-radius: 26px;
+    padding: 42px 48px;
+    border-radius: 28px;
     max-width: 440px;
     text-align: center;
     box-shadow: 0 25px 45px rgba(255, 182, 193, 0.35);
@@ -83,8 +84,18 @@
     position: absolute;
   }
 
+  .fade {
+    animation: fadeIn 1.2s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
   #forgiveMessage,
-  #reasonsSection {
+  #reasonsSection,
+  #finalMessage {
     display: none;
     margin-top: 32px;
     font-weight: 500;
@@ -102,10 +113,12 @@
 <body>
 
 <!-- stickers -->
-<div class="sticker">💗</div>
-<div class="sticker">🎀</div>
-<div class="sticker">🌸</div>
-<div class="sticker">💞</div>
+<div class="sticker s1">💗</div>
+<div class="sticker s2">🎀</div>
+<div class="sticker s3">🌸</div>
+<div class="sticker s4">💞</div>
+<div class="sticker s5">⭐️</div>
+<div class="sticker s6">🧁</div>
 
 <div class="card">
 
@@ -117,13 +130,17 @@
   <button id="noBtn" onmouseover="moveNo()">no, u suck</button>
 </div>
 
-<div id="forgiveMessage">
+<div id="forgiveMessage" class="fade">
   thank u sososo much, i love u
 </div>
 
 <div id="reasonsSection">
   <button onclick="showReason()">reasons why i love you 💖</button>
-  <div id="reason"></div>
+  <div id="reason" class="fade"></div>
+</div>
+
+<div id="finalMessage" class="fade">
+  🎂 happy belated birthday, my love 💕
 </div>
 
 </div>
@@ -166,7 +183,12 @@ function showReason() {
   const r = document.getElementById("reason");
   r.style.display = "block";
   r.innerText = reasons[index];
-  index = (index + 1) % reasons.length;
+
+  index++;
+
+  if (index === reasons.length) {
+    document.getElementById("finalMessage").style.display = "block";
+  }
 }
 </script>
 
