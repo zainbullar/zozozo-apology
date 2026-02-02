@@ -19,18 +19,22 @@
     position: relative;
   }
 
-  /* stickers */
+  /* stickers - fixed positions */
   .sticker {
     position: absolute;
     font-size: 28px;
     opacity: 0.6;
-    animation: floatSlight 6s infinite ease-in-out;
   }
 
-  @keyframes floatSlight {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
-  }
+  /* left side */
+  .s1 { left: 5%; top: 15%; }
+  .s2 { left: 5%; top: 45%; }
+  .s3 { left: 5%; top: 75%; }
+
+  /* right side */
+  .s4 { right: 5%; top: 15%; }
+  .s5 { right: 5%; top: 45%; }
+  .s6 { right: 5%; top: 75%; }
 
   /* confetti */
   .confetti {
@@ -123,6 +127,14 @@
 </head>
 <body>
 
+<!-- stickers -->
+<div class="sticker s1">💗</div>
+<div class="sticker s2">🎀</div>
+<div class="sticker s3">🌸</div>
+<div class="sticker s4">💞</div>
+<div class="sticker s5">⭐️</div>
+<div class="sticker s6">🧁</div>
+
 <div class="card">
 
 <h1>hi zobia 💕</h1>
@@ -196,28 +208,15 @@ function showReason() {
   }
 }
 
-// STICKERS RANDOMLY SCATTERED
-const stickerEmojis = ["💗","🎀","🌸","💞","⭐️","🧁","💖","🌷","🧸","🌟","🍬","🎉"];
-for (let i=0; i<12; i++){
-  const s = document.createElement("div");
-  s.className = "sticker";
-  s.innerText = stickerEmojis[i % stickerEmojis.length];
-  s.style.top = Math.random()*80 + "vh";
-  s.style.left = Math.random()*90 + "vw";
-  s.style.fontSize = (24 + Math.random()*12) + "px";
-  s.style.animationDelay = (Math.random()*5) + "s";
-  document.body.appendChild(s);
-}
-
 // CONFETTI BURST
 function createConfetti(){
-  for(let i=0;i<60;i++){
+  for(let i=0;i<400;i++){
     const c = document.createElement("div");
     c.className = "confetti";
     c.style.background = `hsl(${Math.random()*360}, 70%, 85%)`;
     c.style.left = Math.random()*100 + "vw";
-    c.style.width = c.style.height = (4+Math.random()*5)+"px";
-    c.style.animationDuration = (1 + Math.random()*1.5) + "s";
+    c.style.width = c.style.height = (3+Math.random()*3)+"px";
+    c.style.animationDuration = (0.6 + Math.random()*1) + "s";
     document.body.appendChild(c);
     setTimeout(()=>c.remove(),3000); // remove after 3s
   }
@@ -229,4 +228,3 @@ createConfetti();
 </script>
 </body>
 </html>
-
