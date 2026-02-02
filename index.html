@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You 💛</title>
+<style>
+  body { font-family: Arial,sans-serif; text-align:center; padding:50px; background:#f0f8ff; }
+  button { margin:10px; padding:10px 15px; border:none; border-radius:8px; cursor:pointer; }
+  #forgiveMessage, #reason { margin-top:20px; font-weight:bold; display:none; }
+</style>
+</head>
+<body>
+<h1>Hi bestie 💛</h1>
+<p>I’m really sorry I missed your birthday 😭</p>
+<button onclick="forgiveMe()">Click if you forgive me 💌</button>
+<div id="forgiveMessage">Thank you 😭💛 I love you so much!</div>
+<button onclick="showReason()">Reasons I love you 💖</button>
+<div id="reason"></div>
+
+<script>
+const reasons = [
+  "You’ve been there for me even from far away 💕",
+  "You make me laugh 😂",
+  "You understand me without me explaining 🌟",
+  "You’re kind and thoughtful 🌈",
+  "Life is better with you 💛"
+];
+let index = 0;
+function forgiveMe() { document.getElementById("forgiveMessage").style.display='block'; }
+function showReason() { 
+  const r = document.getElementById("reason");
+  r.style.display='block';
+  r.innerText = reasons[index];
+  index = (index+1)%reasons.length;
+}
+</script>
+</body>
+</html>
