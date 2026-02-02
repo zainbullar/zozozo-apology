@@ -18,7 +18,7 @@
     overflow: hidden;
   }
 
-  /* stickers */
+  /* stickers left and right */
   .sticker {
     position: absolute;
     font-size: 26px;
@@ -26,16 +26,40 @@
     animation: float 7s infinite ease-in-out;
   }
 
-  .s1 { left: 5%; top: 15%; }
-  .s2 { right: 6%; top: 25%; animation-delay: 1s; }
-  .s3 { left: 8%; bottom: 20%; animation-delay: 2s; }
-  .s4 { right: 10%; bottom: 15%; animation-delay: 3s; }
-  .s5 { left: 15%; top: 45%; animation-delay: 4s; }
-  .s6 { right: 15%; bottom: 40%; animation-delay: 5s; }
+  /* Left side stickers */
+  .s1 { left: 5%; top: 10%; }
+  .s2 { left: 5%; top: 25%; animation-delay: 1s; }
+  .s3 { left: 5%; top: 40%; animation-delay: 2s; }
+  .s4 { left: 5%; top: 55%; animation-delay: 3s; }
+  .s5 { left: 5%; top: 70%; animation-delay: 4s; }
+  .s6 { left: 5%; top: 85%; animation-delay: 5s; }
+
+  /* Right side stickers */
+  .s7 { right: 5%; top: 10%; }
+  .s8 { right: 5%; top: 25%; animation-delay: 1.5s; }
+  .s9 { right: 5%; top: 40%; animation-delay: 2.5s; }
+  .s10 { right: 5%; top: 55%; animation-delay: 3.5s; }
+  .s11 { right: 5%; top: 70%; animation-delay: 4.5s; }
+  .s12 { right: 5%; top: 85%; animation-delay: 5.5s; }
 
   @keyframes float {
     0%,100% { transform: translateY(0); }
     50% { transform: translateY(-18px); }
+  }
+
+  /* confetti pieces */
+  .confetti {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: fall linear infinite;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-10px); }
+    100% { transform: translateY(110vh); }
   }
 
   /* card */
@@ -112,13 +136,34 @@
 </head>
 <body>
 
-<!-- stickers -->
+<!-- left stickers -->
 <div class="sticker s1">💗</div>
 <div class="sticker s2">🎀</div>
 <div class="sticker s3">🌸</div>
 <div class="sticker s4">💞</div>
-<div class="sticker s5">⭐️</div>
-<div class="sticker s6">🧁</div>
+<div class="sticker s5">🧁</div>
+<div class="sticker s6">⭐️</div>
+
+<!-- right stickers -->
+<div class="sticker s7">💖</div>
+<div class="sticker s8">🌷</div>
+<div class="sticker s9">🎀</div>
+<div class="sticker s10">💗</div>
+<div class="sticker s11">💞</div>
+<div class="sticker s12">🧸</div>
+
+<!-- confetti -->
+<script>
+for (let i = 0; i < 40; i++) {
+  const c = document.createElement("div");
+  c.className = "confetti";
+  c.style.background = `hsl(${Math.random()*360}, 70%, 85%)`;
+  c.style.left = Math.random()*100 + "vw";
+  c.style.animationDuration = (Math.random()*5 + 4) + "s";
+  c.style.animationDelay = Math.random()*5 + "s";
+  document.body.appendChild(c);
+}
+</script>
 
 <div class="card">
 
