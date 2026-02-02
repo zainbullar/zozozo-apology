@@ -16,50 +16,36 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    position: relative;
   }
 
-  /* stickers left and right */
+  /* stickers */
   .sticker {
     position: absolute;
-    font-size: 26px;
-    opacity: 0.55;
-    animation: float 7s infinite ease-in-out;
+    font-size: 28px;
+    opacity: 0.6;
+    animation: floatSlight 6s infinite ease-in-out;
   }
 
-  /* Left side stickers */
-  .s1 { left: 5%; top: 10%; }
-  .s2 { left: 5%; top: 25%; animation-delay: 1s; }
-  .s3 { left: 5%; top: 40%; animation-delay: 2s; }
-  .s4 { left: 5%; top: 55%; animation-delay: 3s; }
-  .s5 { left: 5%; top: 70%; animation-delay: 4s; }
-  .s6 { left: 5%; top: 85%; animation-delay: 5s; }
-
-  /* Right side stickers */
-  .s7 { right: 5%; top: 10%; }
-  .s8 { right: 5%; top: 25%; animation-delay: 1.5s; }
-  .s9 { right: 5%; top: 40%; animation-delay: 2.5s; }
-  .s10 { right: 5%; top: 55%; animation-delay: 3.5s; }
-  .s11 { right: 5%; top: 70%; animation-delay: 4.5s; }
-  .s12 { right: 5%; top: 85%; animation-delay: 5.5s; }
-
-  @keyframes float {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-18px); }
+  @keyframes floatSlight {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
   }
 
-  /* confetti pieces */
+  /* confetti */
   .confetti {
     position: absolute;
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     opacity: 0.8;
-    animation: fall linear infinite;
+    animation: fall linear forwards;
   }
 
   @keyframes fall {
-    0% { transform: translateY(-10px); }
-    100% { transform: translateY(110vh); }
+    0% { transform: translateY(-10px); opacity:1; }
+    80% { opacity:1; }
+    100% { transform: translateY(110vh); opacity:0; }
   }
 
   /* card */
@@ -72,6 +58,7 @@
     text-align: center;
     box-shadow: 0 25px 45px rgba(255, 182, 193, 0.35);
     z-index: 1;
+    position: relative;
   }
 
   h1 {
@@ -136,35 +123,6 @@
 </head>
 <body>
 
-<!-- left stickers -->
-<div class="sticker s1">💗</div>
-<div class="sticker s2">🎀</div>
-<div class="sticker s3">🌸</div>
-<div class="sticker s4">💞</div>
-<div class="sticker s5">🧁</div>
-<div class="sticker s6">⭐️</div>
-
-<!-- right stickers -->
-<div class="sticker s7">💖</div>
-<div class="sticker s8">🌷</div>
-<div class="sticker s9">🎀</div>
-<div class="sticker s10">💗</div>
-<div class="sticker s11">💞</div>
-<div class="sticker s12">🧸</div>
-
-<!-- confetti -->
-<script>
-for (let i = 0; i < 40; i++) {
-  const c = document.createElement("div");
-  c.className = "confetti";
-  c.style.background = `hsl(${Math.random()*360}, 70%, 85%)`;
-  c.style.left = Math.random()*100 + "vw";
-  c.style.animationDuration = (Math.random()*5 + 4) + "s";
-  c.style.animationDelay = Math.random()*5 + "s";
-  document.body.appendChild(c);
-}
-</script>
-
 <div class="card">
 
 <h1>hi zobia 💕</h1>
@@ -191,6 +149,7 @@ for (let i = 0; i < 40; i++) {
 </div>
 
 <script>
+// REASONS
 const reasons = [
   "you've been there for me, even tho we're so far away",
   "you're so patient and understanding",
@@ -207,6 +166,7 @@ const reasons = [
 let index = 0;
 let yesScale = 1;
 
+// YES/NO button
 function moveNo() {
   const noBtn = document.getElementById("noBtn");
   const x = Math.random() * (window.innerWidth - 100);
@@ -235,7 +195,38 @@ function showReason() {
     document.getElementById("finalMessage").style.display = "block";
   }
 }
-</script>
 
+// STICKERS RANDOMLY SCATTERED
+const stickerEmojis = ["💗","🎀","🌸","💞","⭐️","🧁","💖","🌷","🧸","🌟","🍬","🎉"];
+for (let i=0; i<12; i++){
+  const s = document.createElement("div");
+  s.className = "sticker";
+  s.innerText = stickerEmojis[i % stickerEmojis.length];
+  s.style.top = Math.random()*80 + "vh";
+  s.style.left = Math.random()*90 + "vw";
+  s.style.fontSize = (24 + Math.random()*12) + "px";
+  s.style.animationDelay = (Math.random()*5) + "s";
+  document.body.appendChild(s);
+}
+
+// CONFETTI BURST
+function createConfetti(){
+  for(let i=0;i<60;i++){
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.background = `hsl(${Math.random()*360}, 70%, 85%)`;
+    c.style.left = Math.random()*100 + "vw";
+    c.style.width = c.style.height = (4+Math.random()*5)+"px";
+    c.style.animationDuration = (1 + Math.random()*1.5) + "s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3000); // remove after 3s
+  }
+}
+
+// trigger confetti once on page load
+createConfetti();
+
+</script>
 </body>
 </html>
+
