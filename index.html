@@ -171,14 +171,14 @@
 const reasons = [
   "you've been there for me, even tho we're so far away",
   "you're so patient and understanding",
-  "you always match my energy",
+  "you always match my energy, i never feel like i'm annoying you",
   "your smile makes me smile",
-  "i think you're absolutely perfect",
-  "you're such a genuine person",
+  "i think you're absolutely perfect. nothing less",
+  "you're such a genuine and bright person",
   "i feel really happy around you",
-  "you make me feel safe",
-  "your taste is elite",
-  "you're really funny"
+  "you make me feel like a good person",
+  "you're really funny",
+  "your film and music taste is elite"
 ];
 
 let index = 0;
@@ -222,7 +222,7 @@ function megaConfetti() {
     const originY = Math.random() * window.innerHeight;
 
     for (let i = 0; i < piecesPerBurst; i++) {
-      const c = document.createElement("div");
+      const c = document.createElement("div")
       c.className = "confetti";
 
       const size = 10 + Math.random() * 14;
