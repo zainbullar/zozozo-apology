@@ -39,33 +39,25 @@
     50% { transform: translateY(-18px); }
   }
 
-  /* CONFETTI EXPLOSION */
+  /* CONFETTI */
   .confetti {
     position: fixed;
-    top: 50%;
-    left: 50%;
     width: var(--size);
     height: var(--size);
     background: var(--color);
-    border-radius: 3px;
+    border-radius: var(--radius);
     pointer-events: none;
-    transform: translate(-50%, -50%);
-    animation: boom 3.5s ease-out forwards;
+    animation: blast 4s cubic-bezier(.15,.8,.35,1) forwards;
     z-index: 1;
   }
 
-  @keyframes boom {
+  @keyframes blast {
     0% {
-      transform: translate(-50%, -50%) scale(1);
+      transform: translate(0,0) rotate(0deg) scale(1);
       opacity: 1;
     }
     100% {
-      transform:
-        translate(
-          calc(-50% + var(--xMove)),
-          calc(-50% + var(--yMove))
-        )
-        rotate(var(--rot));
+      transform: translate(var(--xMove), var(--yMove)) rotate(var(--rot)) scale(0.9);
       opacity: 0;
     }
   }
@@ -153,41 +145,39 @@
 <div class="sticker s6">🧁</div>
 
 <div class="card">
+  <h1>hi zobia 💕</h1>
+  <p>i’m really sorry i missed your birthday</p>
 
-<h1>hi zobia 💕</h1>
-<p>i’m really sorry i missed your birthday</p>
+  <div id="forgiveSection">
+    <button id="yesBtn" onclick="forgiveMe()">yes, it's okay</button>
+    <button id="noBtn" onmouseover="moveNo()">no, u suck</button>
+  </div>
 
-<div id="forgiveSection">
-  <button id="yesBtn" onclick="forgiveMe()">yes, it's okay</button>
-  <button id="noBtn" onmouseover="moveNo()">no, u suck</button>
-</div>
+  <div id="forgiveMessage" class="fade">
+    thank u sososo much, i love u
+  </div>
 
-<div id="forgiveMessage" class="fade">
-  thank u sososo much, i love u
-</div>
+  <div id="reasonsSection">
+    <button onclick="showReason()">reasons why i love you 💖</button>
+    <div id="reason" class="fade"></div>
+  </div>
 
-<div id="reasonsSection">
-  <button onclick="showReason()">reasons why i love you 💖</button>
-  <div id="reason" class="fade"></div>
-</div>
-
-<div id="finalMessage" class="fade">
-  🎂 happy belated birthday, my love 💕
-</div>
-
+  <div id="finalMessage" class="fade">
+    🎂 happy belated birthday, my love 💕
+  </div>
 </div>
 
 <script>
 const reasons = [
   "you've been there for me, even tho we're so far away",
   "you're so patient and understanding",
-  "you always match my energy, i never feel like i'm annoying you",
+  "you always match my energy",
   "your smile makes me smile",
-  "i think you're absolutely perfect. nothing less",
-  "you're such a genuine and bright person",
+  "i think you're absolutely perfect",
+  "you're such a genuine person",
   "i feel really happy around you",
-  "you make me feel like a good person",
-  "your film and music taste is elite",
+  "you make me feel safe",
+  "your taste is elite",
   "you're really funny"
 ];
 
@@ -196,11 +186,8 @@ let yesScale = 1;
 
 function moveNo() {
   const noBtn = document.getElementById("noBtn");
-  const x = Math.random() * (window.innerWidth - 100);
-  const y = Math.random() * (window.innerHeight - 50);
-  noBtn.style.left = x + "px";
-  noBtn.style.top = y + "px";
-
+  noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+  noBtn.style.top = Math.random() * (window.innerHeight - 50) + "px";
   yesScale += 0.15;
   document.getElementById("yesBtn").style.transform = `scale(${yesScale})`;
 }
@@ -209,40 +196,51 @@ function forgiveMe() {
   document.getElementById("forgiveSection").style.display = "none";
   document.getElementById("forgiveMessage").style.display = "block";
   document.getElementById("reasonsSection").style.display = "block";
-  createConfetti();
+  megaConfetti();
 }
 
 function showReason() {
   const r = document.getElementById("reason");
   r.style.display = "block";
-  r.innerText = reasons[index];
-  index++;
-
+  r.innerText = reasons[index++];
   if (index === reasons.length) {
     document.getElementById("finalMessage").style.display = "block";
   }
 }
 
-function createConfetti() {
-  const colors = ["#ffd6e8", "#e7d9ff", "#d6f0ff", "#fff1c1", "#fcdff0"];
+function megaConfetti() {
+  const colors = [
+    "#ff3f8e", "#ff9f1c", "#7b61ff",
+    "#00d4ff", "#ffde59", "#ff6b6b"
+  ];
 
-  for (let i = 0; i < 1000; i++) {
-    const c = document.createElement("div");
-    c.className = "confetti";
+  const bursts = 6; // multiple explosions
+  const piecesPerBurst = 250;
 
-    const size = 8 + Math.random() * 10;
-    const xMove = (Math.random() - 0.5) * 900;
-    const yMove = (Math.random() - 0.5) * 900;
-    const rotation = Math.random() * 720 + "deg";
+  for (let b = 0; b < bursts; b++) {
+    const originX = Math.random() * window.innerWidth;
+    const originY = Math.random() * window.innerHeight;
 
-    c.style.setProperty("--size", size + "px");
-    c.style.setProperty("--xMove", xMove + "px");
-    c.style.setProperty("--yMove", yMove + "px");
-    c.style.setProperty("--rot", rotation);
-    c.style.setProperty("--color", colors[Math.floor(Math.random() * colors.length)]);
+    for (let i = 0; i < piecesPerBurst; i++) {
+      const c = document.createElement("div");
+      c.className = "confetti";
 
-    document.body.appendChild(c);
-    setTimeout(() => c.remove(), 3500);
+      const size = 10 + Math.random() * 14;
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 400 + Math.random() * 600;
+
+      c.style.left = originX + "px";
+      c.style.top = originY + "px";
+      c.style.setProperty("--size", size + "px");
+      c.style.setProperty("--xMove", Math.cos(angle) * distance + "px");
+      c.style.setProperty("--yMove", Math.sin(angle) * distance + "px");
+      c.style.setProperty("--rot", Math.random() * 720 + "deg");
+      c.style.setProperty("--color", colors[Math.floor(Math.random() * colors.length)]);
+      c.style.setProperty("--radius", Math.random() > 0.5 ? "50%" : "3px");
+
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 4000);
+    }
   }
 }
 </script>
