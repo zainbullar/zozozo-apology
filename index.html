@@ -39,34 +39,36 @@
     50% { transform: translateY(-18px); }
   }
 
- /* confetti */
-.confetti {
-  position: absolute;
-  width: var(--size);
-  height: var(--size);
-  background: var(--color);
-  top: -10px;
-  left: var(--x);
-  opacity: 0.9;
-  border-radius: 2px;
-  pointer-events: none;
-  animation: explode 4s ease-out forwards;
-  z-index: 0;
-}
-
-@keyframes explode {
-  0% {
-    transform: translate(0, 0) rotate(0deg);
-    opacity: 1;
+  /* CONFETTI EXPLOSION */
+  .confetti {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: var(--size);
+    height: var(--size);
+    background: var(--color);
+    border-radius: 3px;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    animation: boom 3.5s ease-out forwards;
+    z-index: 1;
   }
-  100% {
-    transform:
-      translate(var(--xMove), 110vh)
-      rotate(var(--rot));
-    opacity: 0;
-  }
-}
 
+  @keyframes boom {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform:
+        translate(
+          calc(-50% + var(--xMove)),
+          calc(-50% + var(--yMove))
+        )
+        rotate(var(--rot));
+      opacity: 0;
+    }
+  }
 
   /* card */
   .card {
@@ -207,8 +209,7 @@ function forgiveMe() {
   document.getElementById("forgiveSection").style.display = "none";
   document.getElementById("forgiveMessage").style.display = "block";
   document.getElementById("reasonsSection").style.display = "block";
-
-  createConfetti(); // 🎉 CONFETTI HERE
+  createConfetti();
 }
 
 function showReason() {
@@ -229,22 +230,21 @@ function createConfetti() {
     const c = document.createElement("div");
     c.className = "confetti";
 
-    const size = 6 + Math.random() * 8;
-    const startX = Math.random() * 100;
-    const moveX = (Math.random() - 0.5) * 600;
+    const size = 8 + Math.random() * 10;
+    const xMove = (Math.random() - 0.5) * 900;
+    const yMove = (Math.random() - 0.5) * 900;
     const rotation = Math.random() * 720 + "deg";
 
     c.style.setProperty("--size", size + "px");
-    c.style.setProperty("--x", startX + "vw");
-    c.style.setProperty("--xMove", moveX + "px");
+    c.style.setProperty("--xMove", xMove + "px");
+    c.style.setProperty("--yMove", yMove + "px");
     c.style.setProperty("--rot", rotation);
     c.style.setProperty("--color", colors[Math.floor(Math.random() * colors.length)]);
 
     document.body.appendChild(c);
-    setTimeout(() => c.remove(), 4000);
+    setTimeout(() => c.remove(), 3500);
   }
 }
-
 </script>
 
 </body>
