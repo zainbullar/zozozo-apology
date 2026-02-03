@@ -19,37 +19,41 @@
     position: relative;
   }
 
-  /* stickers - fixed positions */
+  /* stickers (UNCHANGED) */
   .sticker {
     position: absolute;
-    font-size: 28px;
-    opacity: 0.6;
+    font-size: 26px;
+    opacity: 0.55;
+    animation: float 7s infinite ease-in-out;
   }
 
-  /* left side */
   .s1 { left: 5%; top: 15%; }
-  .s2 { left: 5%; top: 45%; }
-  .s3 { left: 5%; top: 75%; }
+  .s2 { right: 6%; top: 25%; animation-delay: 1s; }
+  .s3 { left: 8%; bottom: 20%; animation-delay: 2s; }
+  .s4 { right: 10%; bottom: 15%; animation-delay: 3s; }
+  .s5 { left: 15%; top: 45%; animation-delay: 4s; }
+  .s6 { right: 15%; bottom: 40%; animation-delay: 5s; }
 
-  /* right side */
-  .s4 { right: 5%; top: 15%; }
-  .s5 { right: 5%; top: 45%; }
-  .s6 { right: 5%; top: 75%; }
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-18px); }
+  }
 
   /* confetti */
   .confetti {
     position: absolute;
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
-    opacity: 0.8;
+    opacity: 0.9;
     animation: fall linear forwards;
+    pointer-events: none;
+    z-index: 0;
   }
 
   @keyframes fall {
-    0% { transform: translateY(-10px); opacity:1; }
-    80% { opacity:1; }
-    100% { transform: translateY(110vh); opacity:0; }
+    from { transform: translateY(-10vh); }
+    to { transform: translateY(110vh); }
   }
 
   /* card */
@@ -61,8 +65,7 @@
     max-width: 440px;
     text-align: center;
     box-shadow: 0 25px 45px rgba(255, 182, 193, 0.35);
-    z-index: 1;
-    position: relative;
+    z-index: 2;
   }
 
   h1 {
@@ -161,7 +164,6 @@
 </div>
 
 <script>
-// REASONS
 const reasons = [
   "you've been there for me, even tho we're so far away",
   "you're so patient and understanding",
@@ -178,7 +180,6 @@ const reasons = [
 let index = 0;
 let yesScale = 1;
 
-// YES/NO button
 function moveNo() {
   const noBtn = document.getElementById("noBtn");
   const x = Math.random() * (window.innerWidth - 100);
@@ -194,13 +195,14 @@ function forgiveMe() {
   document.getElementById("forgiveSection").style.display = "none";
   document.getElementById("forgiveMessage").style.display = "block";
   document.getElementById("reasonsSection").style.display = "block";
+
+  createConfetti(); // 🎉 CONFETTI HERE
 }
 
 function showReason() {
   const r = document.getElementById("reason");
   r.style.display = "block";
   r.innerText = reasons[index];
-
   index++;
 
   if (index === reasons.length) {
@@ -208,23 +210,22 @@ function showReason() {
   }
 }
 
-// CONFETTI BURST
-function createConfetti(){
-  for(let i=0;i<400;i++){
+/* CONFETTI FUNCTION */
+function createConfetti() {
+  const colors = ["#ffd6e8", "#e7d9ff", "#d6f0ff", "#fff1c1", "#fcdff0"];
+
+  for (let i = 0; i < 1000; i++) {
     const c = document.createElement("div");
     c.className = "confetti";
-    c.style.background = `hsl(${Math.random()*360}, 70%, 85%)`;
-    c.style.left = Math.random()*100 + "vw";
-    c.style.width = c.style.height = (3+Math.random()*3)+"px";
-    c.style.animationDuration = (0.6 + Math.random()*1) + "s";
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.animationDuration = "4s";
     document.body.appendChild(c);
-    setTimeout(()=>c.remove(),3000); // remove after 3s
+
+    setTimeout(() => c.remove(), 4000);
   }
 }
-
-// trigger confetti once on page load
-createConfetti();
-
 </script>
+
 </body>
 </html>
