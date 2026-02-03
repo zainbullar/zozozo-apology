@@ -39,22 +39,34 @@
     50% { transform: translateY(-18px); }
   }
 
-  /* confetti */
-  .confetti {
-    position: absolute;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    opacity: 0.9;
-    animation: fall linear forwards;
-    pointer-events: none;
-    z-index: 0;
-  }
+ /* confetti */
+.confetti {
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+  background: var(--color);
+  top: -10px;
+  left: var(--x);
+  opacity: 0.9;
+  border-radius: 2px;
+  pointer-events: none;
+  animation: explode 4s ease-out forwards;
+  z-index: 0;
+}
 
-  @keyframes fall {
-    from { transform: translateY(-10vh); }
-    to { transform: translateY(110vh); }
+@keyframes explode {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
   }
+  100% {
+    transform:
+      translate(var(--xMove), 110vh)
+      rotate(var(--rot));
+    opacity: 0;
+  }
+}
+
 
   /* card */
   .card {
@@ -210,21 +222,29 @@ function showReason() {
   }
 }
 
-/* CONFETTI FUNCTION */
 function createConfetti() {
   const colors = ["#ffd6e8", "#e7d9ff", "#d6f0ff", "#fff1c1", "#fcdff0"];
 
   for (let i = 0; i < 1000; i++) {
     const c = document.createElement("div");
     c.className = "confetti";
-    c.style.background = colors[Math.floor(Math.random() * colors.length)];
-    c.style.left = Math.random() * 100 + "vw";
-    c.style.animationDuration = "4s";
-    document.body.appendChild(c);
 
+    const size = 6 + Math.random() * 8;
+    const startX = Math.random() * 100;
+    const moveX = (Math.random() - 0.5) * 600;
+    const rotation = Math.random() * 720 + "deg";
+
+    c.style.setProperty("--size", size + "px");
+    c.style.setProperty("--x", startX + "vw");
+    c.style.setProperty("--xMove", moveX + "px");
+    c.style.setProperty("--rot", rotation);
+    c.style.setProperty("--color", colors[Math.floor(Math.random() * colors.length)]);
+
+    document.body.appendChild(c);
     setTimeout(() => c.remove(), 4000);
   }
 }
+
 </script>
 
 </body>
